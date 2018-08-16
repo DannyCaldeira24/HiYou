@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>
+		{% block title %} SF3 NETWORK {% endblock %}
+	</title>
+	{% block stylesheets %}
+		<link rel="stylesheet" href="{{asset('assets/bootstrap/css/bootstrap.min.css')}}" type="text/css">
+		<link rel="stylesheet" href="{{asset('assets/css/bootstrap.cosmo.min.css')}}" type="text/css">
+		<link rel="stylesheet" href="{{asset('assets/css/styles.css')}}" type="text/css">
+	{% endblock %}
+	{% block javascripts %}
+		<script src="{{asset('assets/js/jquery.min.js')}}"></script>
+		<script src="{{asset('assets/bootstrap/js/bootstrap.min.js')}}"></script>
+	{% endblock %}
+</head>
+<body>
+	<header>
+		<h1>Social Network</h1>
+	</header>
+	<section id="content">
+		{% block content %}
+			content default
+		{% endblock %}	
+	</section>
+	<footer>
+		<hr/>
+		<p>Desarrollar una red social con Symfony3 - Danny Caldeira - dannyelportu2013@gmail.com</p>
+	</footer>
+</body>
+</html>

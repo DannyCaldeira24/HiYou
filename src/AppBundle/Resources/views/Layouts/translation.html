@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>
+		{% block title %} SF3 NETWORK {% endblock %}
+	</title>
+		{% block stylesheets %}
+
+		{% endblock %}
+</head>
+<body>
+	<header>
+		<h1>Social Network</h1>
+	</header>
+	<section id="content">
+		{% block content %}
+			content default
+		{% endblock %}	
+	</section>
+	<footer>
+		<hr/>
+		<p>Desarrollar una red social con Symfony3 - Danny Caldeira - dannyelportu2013@gmail.com</p>
+	</footer>
+</body>
+</html>

@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\Session;
 
@@ -60,5 +61,21 @@ class UserController extends Controller
             $session->getFlashBag()->add("error", $status);
         }
         return $this->render('AppBundle:User:register.html.twig', array("form"=>$form->createView()));
+    }
+    
+    public function nickTestAction(Request $request){
+        //Comprobar si el nick del usuario que se quiere registrar ya existe en tiempo real
+        $nick = $request->get("nick");
+        $em = $this->getDoctrine()->getManager();
+        $user_repo = $em->getRepository("BackendBundle:User");
+        $user_isset = $user_repo->findOneBy(array("nick" =>$nick));
+        
+        $result = "used";
+        if(is_object($user_isset)){
+            $result="used";
+        }else{
+            $result="unused";
+        }
+        return new Response($result);
     }
 }

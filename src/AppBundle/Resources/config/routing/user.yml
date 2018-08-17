@@ -1,7 +1,12 @@
 login:
     path: /login
-    defaults: {_controller: AppBundle:User:Login}
+    defaults: {_controller: AppBundle:User:login }
 
 register:
     path: /register
-    defaults: {_controller: AppBundle:User:Register}
+    defaults: {_controller: AppBundle:User:register }
+
+user_nick_test:
+    path: /nick-test
+    defaults: {_controller: AppBundle:User:nickTest }
+    methods: [POST]

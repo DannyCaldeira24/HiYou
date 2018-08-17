@@ -5,12 +5,13 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 use BackendBundle\Entity\User;
 use AppBundle\Form\RegisterType;
 
 class UserController extends Controller
-{
+{   
     public function loginAction(Request $request){
         return $this->render('AppBundle:User:login.html.twig', array("titulo"=>"Login"));
     }
@@ -43,6 +44,8 @@ class UserController extends Controller
                     
                     if($flush==null){
                         $status="Te has registrado correctamente";
+                        $session = $request->getSession();
+                        $session->getFlashBag()->add("status", $status);
                         return $this->redirect("login");
                     }else{
                         $status="No te has registrado correctamente";
@@ -53,8 +56,8 @@ class UserController extends Controller
             }else{
                 $status="No te has registrado correctamente !!";
             }
-           var_dump($status);
-           die();
+            $session = $request->getSession();
+            $session->getFlashBag()->add("error", $status);
         }
         return $this->render('AppBundle:User:register.html.twig', array("form"=>$form->createView()));
     }

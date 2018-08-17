@@ -7,5 +7,5 @@ app_publication:
     prefix: /
 
 app_homepage:
-    path: /
+    path: /login
     defaults: {_controller: AppBundle:User:login}      

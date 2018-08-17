@@ -57,7 +57,25 @@ class User
      */
     private $image;
 
-
+    public function getUsername(){
+        return $this->email;
+    }
+    
+    public function getSalt(){
+        return null;
+    }
+    
+    public function getRoles(){
+        return $this->getRole();
+    }
+    
+    public function eraseCredentials(){
+        
+    }
+    
+    public function _toString(){
+        return $this->name;
+    }
     /**
      * Get id
      *

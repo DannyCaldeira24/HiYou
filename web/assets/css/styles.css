@@ -1,0 +1,18 @@
+/*REGISTRO*/
+
+.box-form{
+	background:white;
+	border:1px solid #ccc;
+	padding:20px;
+	margin:0px auto;
+	float:none;
+}
+.box-form input{
+	margin-bottom:10px;
+}
+footer{
+	text-align:center;
+}
+nav{
+	margin-bottom:10px;
+}

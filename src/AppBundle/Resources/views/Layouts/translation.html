@@ -10,17 +10,12 @@
 		{% endblock %}
 </head>
 <body>
-	<header>
-		<h1>Social Network</h1>
-	</header>
-	<section id="content">
-		{% block content %}
-			content default
-		{% endblock %}	
-	</section>
-	<footer>
+	<div class="box-form">
+		<h2>Registrarse</h2>
 		<hr/>
-		<p>Desarrollar una red social con Symfony3 - Danny Caldeira - dannyelportu2013@gmail.com</p>
-	</footer>
+		{{form_start(form,{'action':'','method':'POST'})}}
+		{{form_errors(form)}}
+		{{form_end(form)}}
+	</div>
 </body>
 </html>

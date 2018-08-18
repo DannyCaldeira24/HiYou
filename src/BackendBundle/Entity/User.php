@@ -1,11 +1,11 @@
 <?php
 
 namespace BackendBundle\Entity;
-
+use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * User
  */
-class User
+class User implements UserInterface
 {
     /**
      * @var integer
@@ -107,7 +107,7 @@ class User
      */
     public function getRole()
     {
-        return $this->role;
+        return array('ROLE_USER','ROLE_ADMIN');
     }
 
     /**

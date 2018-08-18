@@ -29,24 +29,53 @@
 		      	HiYou
 		      </a>
 		    </li>
+		   {%if app.user == null%} 
 		    <li class="nav-item">
 		      <a class="nav-link" href="{{path("login")}}">
 		      	<span class="fas fa-sign-in-alt"></span>
 		      	Entrar
 		      </a>
-		    </li>
+		    </li> 
 		    <li class="nav-item">
 		      <a class="nav-link" href="{{path("register")}}">
-		      	<span class="fas fa-user"></span>
+		      	<span class="fas fa-user-plus"></span>
 		      	Registro
 		      </a>
 		    </li>
+		   {% endif %} 
+		  {%if app.user != null%}
+		    <li class="nav-item dropdown">
+		        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		        	<span class="fas fa-user-circle"></span>	
+		          	{{app.user.name}} {{app.user.surname}}
+		        </a>
+		        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		          <a class="dropdown-item" href="#">
+		          	<span class="fas fa-user"></span>
+		          	Mi perfil
+		          </a>
+		          <a class="dropdown-item" href="#">
+		          	<span class="fas fa-cog"></span>
+		          	Mis datos
+		          </a>
+		          <div class="dropdown-divider"></div>
+		          <a class="dropdown-item" href="{{path("logout")}}">
+					<span class="fas fa-sign-out-alt"></span>	
+		          	Salir
+		      	  </a>
+		          <a class="dropdown-item" href="#">
+		          	<span class="fas fa-info-circle"></span>
+		          	Ayuda
+		      	  </a>
+		        </div>
+	      	</li>		  	
+		  {% endif %}
 		  </ul>
 		</nav>
 	</header>
 	<section id="content">
 		<div class="container">
-			<div class="col-lg-11">
+			<div class="col-lg-12">
 				{%for message in app.session.flashbag().get('status')%}
 					<div class="alert alert-success">{{message}}</div>
 				{% endfor%}

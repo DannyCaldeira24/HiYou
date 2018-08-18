@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>
-		{% block title %} SF3 NETWORK {% endblock %}
+		{% block title %} HiYou {% endblock %}
 	</title>
 	{% block stylesheets %}
 		<link rel="stylesheet" href="{{asset('assets/bootstrap/css/bootstrap.css')}}" type="text/css">
@@ -54,7 +54,7 @@
 		          	<span class="fas fa-user"></span>
 		          	Mi perfil
 		          </a>
-		          <a class="dropdown-item" href="#">
+		          <a class="dropdown-item" href="{{path("user_edit")}}">
 		          	<span class="fas fa-cog"></span>
 		          	Mis datos
 		          </a>

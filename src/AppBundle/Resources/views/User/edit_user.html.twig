@@ -5,12 +5,11 @@
         <script src="{{asset('assets/js/custom/email-test.js')}}"></script>
 {% endblock %}
 {% block content %}
-
-	<div class="col-lg-8 box-form">
-            <h2>Registrarse</h2>
-            <hr/>
-            {{form_start(form,{'action':'','method':'POST'})}}
-            {{form_errors(form)}}
-            {{form_end(form)}}
-	</div>
-{% endblock %}	
+    <div class="col-lg-8 box-form">
+        <h2>Mis datos</h2>
+        <hr/>
+        
+        {{form_start(form,{'enctype':'multipart/form-data'})}}
+        {{form_end(form)}}
+    </div>    
+{%endblock%}

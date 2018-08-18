@@ -22,6 +22,16 @@ user_email_test:
     defaults: {_controller: AppBundle:User:emailTest }
     methods: [POST]
 
+user_nick2_test:
+    path: /nick2-test
+    defaults: {_controller: AppBundle:User:nick2Test }
+    methods: [POST]
+
+user_email2_test:
+    path: /email2-test
+    defaults: {_controller: AppBundle:User:email2Test }
+    methods: [POST]
+
 user_edit:
     path: /my-data
     defaults: {_controller: AppBundle:User:editUser }

@@ -106,10 +106,44 @@ class UserController extends Controller {
         }
         return new Response($result);
     }
+    public function nick2TestAction(Request $request) {
+        //Comprobar si el nick del usuario que se quiere registrar ya existe en tiempo real
+        $user = $this->getUser();
+        $nickcurrent = $user->getNick();
+        $nick = $request->get("nick");
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery('SELECT u FROM BackendBundle:User u WHERE u.nick = :nick')
+                ->setParameter('nick', $nick);
+        $user_isset = $query->getResult();
+        if (count($user_isset) == 0 || ($nickcurrent == $user_isset[0]->getNick())) {
+            $result = "unused";
+        } else {
+            $result = "used";
+        }
+        return new Response($result);
+    }
+    public function email2TestAction(Request $request) {
+        //Comprobar si el nick del usuario que se quiere registrar ya existe en tiempo real
+        $user = $this->getUser();
+        $emailcurrent = $user->getEmail();
+        $email = $request->get("email");
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery('SELECT u FROM BackendBundle:User u WHERE u.email = :email')
+                ->setParameter('email', $email);
+        $user_isset = $query->getResult();
+        if (count($user_isset) == 0 || ($emailcurrent == $user_isset[0]->getEmail())) {
+            $result = "unused";
+        } else {
+            $result = "used";
+        }
+        return new Response($result);
+    }
 
     public function editUserAction(Request $request) {
 
         $user = $this->getUser();
+        $nickcurrent = $user->getNick();
+        $emailcurrent = $user->getEmail();
         $user_image=$user->getImage();
         $form = $this->createForm(UserType::class, $user);
 
@@ -122,7 +156,7 @@ class UserController extends Controller {
                         ->setParameter('email', $form->get("email")->getData())
                         ->setParameter('nick', $form->get("nick")->getData());
                 $user_isset = $query->getResult();
-                if (($user->getEmail() == $user_isset[0]->getEmail() && $user->getNick() == $user_isset[0]->getNick()) || count($user_isset) == 0) {
+                if (count($user_isset) == 0 || ($emailcurrent == $user_isset[0]->getEmail() && $nickcurrent == $user_isset[0]->getNick())) {
                     
                     //subiendo archivo
                     $file = $form["image"]->getData();

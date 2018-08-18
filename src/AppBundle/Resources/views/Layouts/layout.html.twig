@@ -43,11 +43,19 @@
 		      </a>
 		    </li>
 		   {% endif %} 
+		  </ul> 
 		  {%if app.user != null%}
+		  <ul class="navbar-nav ml-auto">
 		    <li class="nav-item dropdown">
 		        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		        	<span class="fas fa-user-circle"></span>	
-		          	{{app.user.name}} {{app.user.surname}}
+		        	<div class="avatar">
+		        		{% if app.user.image == null %}
+			        		<img src="{{asset('assets/images/default.png')}}" alt="">	
+			          	{%else%}
+							<img src="{{asset('uploads/users/'~app.user.image)}}" alt="">
+			          	{% endif %}
+			        </div>  	
+			        {{app.user.name}} {{app.user.surname}}
 		        </a>
 		        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 		          <a class="dropdown-item" href="#">
@@ -68,9 +76,9 @@
 		          	Ayuda
 		      	  </a>
 		        </div>
-	      	</li>		  	
+	      	</li>
+	      </ul>			  	
 		  {% endif %}
-		  </ul>
 		</nav>
 	</header>
 	<section id="content">

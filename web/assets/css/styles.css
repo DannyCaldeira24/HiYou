@@ -10,10 +10,26 @@
 .box-form input{
 	margin-bottom:10px;
 }
-footer{
-	margin-top:50px;
-	text-align:center;
+/*HEADER*/
+.avatar{
+	background:white;
+	border-radius:500px;
+	width:30px;
+	height:30px;
+	overflow:hidden;
+	float:left;
+	margin-right:12px;
+	margin-top:-5px;
+}
+.avatar img{
+	height:100%;
+	width:100%;
 }
 nav{
-	margin-bottom:30px;
+	margin-bottom:35px;
+}
+/*FOOTER*/
+footer{
+	margin-top:40px;
+	text-align:center;
 }

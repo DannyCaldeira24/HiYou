@@ -91,6 +91,7 @@ class UserController extends Controller {
         }
         return new Response($result);
     }
+
     public function emailTestAction(Request $request) {
         //Comprobar si el nick del usuario que se quiere registrar ya existe en tiempo real
         $email = $request->get("email");
@@ -106,6 +107,7 @@ class UserController extends Controller {
         }
         return new Response($result);
     }
+
     public function nick2TestAction(Request $request) {
         //Comprobar si el nick del usuario que se quiere registrar ya existe en tiempo real
         $user = $this->getUser();
@@ -122,6 +124,7 @@ class UserController extends Controller {
         }
         return new Response($result);
     }
+
     public function email2TestAction(Request $request) {
         //Comprobar si el nick del usuario que se quiere registrar ya existe en tiempo real
         $user = $this->getUser();
@@ -144,32 +147,31 @@ class UserController extends Controller {
         $user = $this->getUser();
         $nickcurrent = $user->getNick();
         $emailcurrent = $user->getEmail();
-        $user_image=$user->getImage();
+        $user_image = $user->getImage();
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getManager();
-   
+
                 $query = $em->createQuery('SELECT u FROM BackendBundle:User u WHERE u.email = :email OR u.nick = :nick')
                         ->setParameter('email', $form->get("email")->getData())
                         ->setParameter('nick', $form->get("nick")->getData());
                 $user_isset = $query->getResult();
                 if (count($user_isset) == 0 || ($emailcurrent == $user_isset[0]->getEmail() && $nickcurrent == $user_isset[0]->getNick())) {
-                    
+
                     //subiendo archivo
                     $file = $form["image"]->getData();
-                    if(!empty($file) && $file !=null){
-                       $ext=$file->guessExtension();
-                       if($ext == 'jpg' || $ext == 'jpeg' || $ext == 'png' || $ext == 'gif'){
-                           $file_name = $user->getId().time().'.'.$ext;
-                           $file->move("uploads/users",$file_name);
-                           
-                           $user->setImage($file_name);
-                           
-                       }
-                    }else{
+                    if (!empty($file) && $file != null) {
+                        $ext = $file->guessExtension();
+                        if ($ext == 'jpg' || $ext == 'jpeg' || $ext == 'png' || $ext == 'gif') {
+                            $file_name = $user->getId() . time() . '.' . $ext;
+                            $file->move("uploads/users", $file_name);
+
+                            $user->setImage($file_name);
+                        }
+                    } else {
                         $user->setImage($user_image);
                     }
 
@@ -196,6 +198,22 @@ class UserController extends Controller {
         }
         return $this->render('AppBundle:User:edit_user.html.twig', array(
                     "form" => $form->createView()
+        ));
+    }
+
+    public function usersAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+
+        $dql = "SELECT u FROM BackendBundle:User u ORDER BY u.id ASC";
+        $query = $em->createQuery($dql);
+
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+                $query, $request->query->getInt('page', 1), 5
+        );
+
+        return $this->render('AppBundle:User:users.html.twig',array(
+           'pagination' => $pagination 
         ));
     }
 

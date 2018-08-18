@@ -1,0 +1,41 @@
+{% extends "AppBundle:Layouts:layout.html.twig"%}
+{% block content %}
+    <div class="container">
+        <div class="col-lg-12 box-default">
+            <h1>Personas</h1>
+            <div class="count">
+                <span class="label label-primary">
+                    Total de personas: {{pagination.getTotalItemCount }}
+                </span>
+            </div>
+            <hr/>
+            <div class="box-content box-users">
+                {% for user in pagination %}
+                    <div class="row">
+                        <div class="col-lg-12 user-item">
+                            <div class="avatar">
+                                {% if user.image == null %}
+                                    <img src="{{asset('assets/images/default.png')}}" alt="">	
+                                {%else%}
+                                    <img src="{{asset('uploads/users/'~user.image)}}" alt="">
+                                {% endif %}
+                            </div>
+                            <div class="user-item-content">
+                                <p>{{user.name}} {{user.surname}} - {{user.nick}}</p>
+                                <p>{{user.bio}}</p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <hr>        
+                {% endfor %}
+            </div>
+            
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    {{knp_pagination_render(pagination) }}
+                </ul>
+            </nav>   
+        </div>
+    </div>
+{%endblock%}

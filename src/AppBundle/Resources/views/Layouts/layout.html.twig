@@ -27,6 +27,7 @@
 		      <a class="nav-link" href="{{path("app_homepage")}}">
 		      	<span class="fab fa-angellist"></span>
 		      	HiYou
+		      	&nbsp;
 		      </a>
 		    </li>
 		   {%if app.user == null%} 
@@ -34,13 +35,30 @@
 		      <a class="nav-link" href="{{path("login")}}">
 		      	<span class="fas fa-sign-in-alt"></span>
 		      	Entrar
+		      	&nbsp;
 		      </a>
 		    </li> 
 		    <li class="nav-item">
 		      <a class="nav-link" href="{{path("register")}}">
 		      	<span class="fas fa-user-plus"></span>
 		      	Registro
+		      	&nbsp;
 		      </a>
+		    </li>
+		   {% else %}
+		   	<li class="nav-item">
+				<a class="nav-link" href="{{path("app_homepage")}}">
+			      	<span class="fas fa-home"></span>
+			     	Inicio
+			     	&nbsp;
+		      	</a>
+		    </li>
+		   	<li class="nav-item">
+				<a class="nav-link" href="{{path("user_list")}}">
+			      	<span class="fas fa-users"></span>
+			     	Personas
+			     	&nbsp;
+		      	</a>
 		    </li>
 		   {% endif %} 
 		  </ul> 

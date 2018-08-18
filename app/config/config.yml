@@ -72,3 +72,15 @@ swiftmailer:
 sensio_framework_extra:
    router:
         annotations: false
+
+#knpPaginatorBundle
+knp_paginator:
+    page_range: 5
+    default_options:
+        page_name: page
+        sort_field_name: sort
+        sort_direction_name: direction
+        distinct: true
+    template:
+        pagination: AppBundle:Layouts:custom_pagination.html.twig
+        sortable: knpPaginatorBundle:Pagination:sortable_link.html.twig    

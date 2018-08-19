@@ -57,6 +57,43 @@ nav{
 	display: none;
 	visibility: hidden;
 }
+/*HOME*/
+#user-card{
+	
+}
+#user-card .avatar{
+	background:#eee;
+	border-radius:500px;
+	width:100px;
+	height:100px;
+	overflow:hidden;
+	float:left;
+}
+#user-card .avatar img{
+	height:100%;
+	text-align:center;
+	opacity: 0.9;
+}
+
+#user-card .nickname{
+	opacity:0.7;
+}
+
+#user-card .name-surname{
+	float:left;
+	font-size:20px;
+	padding:10px;
+}
+
+#new-publication input{
+	margin-bottom:10px;
+}
+
+#new-publication textarea{
+	margin-bottom:10px;
+}
+
+
 /*FOOTER*/
 footer{
 	margin-top:40px;

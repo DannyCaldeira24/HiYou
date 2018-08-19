@@ -32,18 +32,20 @@
                             <div class="row">
                                 <div class="col-md-8"></div>
                                 <div class="col-md-4 buttons-following">
-                                    <button class="btn btn-info btn-follow" 
+                                    <button class="btn btn-info btn-follow 
                                             {% if app.user|following(user) == true %}
                                                 hidden
-                                            {% endif %}    
+                                            {% endif %}
+                                            "
                                             data-followed="{{user.id}}">
                                         <span class="fas fa-check" aria-hidden="true"></span>
                                         Seguir
                                     </button>
-                                    <button class="btn btn-info btn-unfollow" 
+                                    <button class="btn btn-info btn-unfollow 
                                             {% if app.user|following(user) == false %}
                                                 hidden
                                             {% endif %}
+                                            "
                                             data-followed="{{user.id}}">
                                         <span class="fas fa-times" aria-hidden="true"></span>
                                         Dejar de seguir

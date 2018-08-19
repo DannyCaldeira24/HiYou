@@ -236,7 +236,7 @@ class UserController extends Controller {
                 $query, $request->query->getInt('page', 1), 5
         );
 
-        return $this->render('AppBundle:User:users.html.twig',array(
+        return $this->render('AppBundle:User:search.html.twig',array(
            'pagination' => $pagination 
         ));
     }    

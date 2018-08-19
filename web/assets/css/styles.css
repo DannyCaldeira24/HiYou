@@ -53,6 +53,10 @@
 nav{
 	margin-bottom:35px;
 }
+.hidden{
+	display: none;
+	visibility: hidden;
+}
 /*FOOTER*/
 footer{
 	margin-top:40px;

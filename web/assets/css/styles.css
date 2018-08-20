@@ -1,5 +1,7 @@
 /*REGISTRO*/
-
+body{
+	background-color:#eee;
+}
 .box-form{
 	background:white;
 	border:1px solid #ccc;
@@ -25,17 +27,23 @@
 	height:100%;
 	width:100%;
 }
-/*PERSONAS*/
-.user-item .avatar{
+/*PERSONAS y TIMELINE*/
+.box-content{
+
+}
+.publication-item{
+	margin:10px;
+}
+.user-item .avatar,
+.publication-item .avatar{
 	background:#eee;
 	border-radius:550px;
 	width:75px;
 	height:75px;
 	overflow:hidden;
-	float:left;
-
 }
-.user-item .avatar img{
+.user-item .avatar img,
+.publication-item .avatar img{
 	height:100%;
 	text-align:center;
 }
@@ -74,9 +82,12 @@ nav{
 	text-align:center;
 	opacity: 0.9;
 }
+.text-area{
 
+}
 #user-card .nickname{
 	opacity:0.7;
+	font-size:14px;
 }
 
 #user-card .name-surname{
@@ -89,10 +100,44 @@ nav{
 	margin-bottom:10px;
 }
 
+#new-publication button{
+	text-align:center;
+}
+
 #new-publication textarea{
 	margin-bottom:10px;
 }
 
+.pub-name-link{
+	font-weight:bold;
+	color:#42a7f4;
+}
+
+.pub-nick{
+	opacity:0.7;
+}
+
+.pub-date{
+	font-size:12px;
+}
+
+.pub-image{
+	display:none;
+	transition: all 300ms;
+}
+
+.pub-image img{
+	width:100%;
+	text-align:center;
+	display:block;
+	margin:0px auto;
+}
+
+.publication-item .fas{
+	margin-right:7px;
+	cursor:pointer;
+	color:#444 !important;
+}
 
 /*FOOTER*/
 footer{

@@ -1,31 +1,29 @@
 {% extends "AppBundle:Layouts:layout.html.twig"%}
 {% block javascripts %}
     {{parent()}}
-    <script type="text/javascript" src="{{asset('assets/js/custom/home.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/js/custom/profile.js')}}"></script>
 {% endblock %}
 {% block content %}
     <div class="container">
         <div class="row">
-            <div id="user-card" class="col-md-5">
+            <div id="user-card" class="col-md-12">
                 <div class="box-default">
-                    <div class="row">
+                    <div class="col-md-7 profile-box">
                         <div class="avatar">
-                            {% if app.user.image == null %}
+                            {% if user.image == null %}
                                 <img src="{{asset('assets/images/default.png')}}" alt="">	
                             {%else%}
-                                <img src="{{asset('uploads/users/'~app.user.image)}}" alt="">
+                                <img src="{{asset('uploads/users/'~user.image)}}" alt="">
                             {% endif %}
                         </div>    
                         <div class="name-surname">
-                            <a href="{{ path('user_profile',{'nickname':app.user.nick}) }}"><p>{{app.user.name}} {{app.user.surname}}</p></a>
-                            <div class="clearfix"></div>
-                            <span class="nickname">
-                                <p>{{app.user.nick}}</p>
-                            </span>
+                            <p><a href="{{ path('user_profile',{'nickname':user.nick}) }}">{{user.name}} {{user.surname}}</a><span class="nickname">&nbsp;@{{user.nick}}</span></p>
+                            <p class="bio">{{user.bio}}</p>
+                            <div class="clearfix"></div>                    
                         </div>
                         <div class="clearfix"></div>
                     </div>
-                    {% set user_stats = app.user|user_stats %}        
+                    {% set user_stats = user|user_stats %}        
                     <div class="row">
                         <div class="col-md-3 following-data">
                             <a href="#">
@@ -70,21 +68,15 @@
                     </div>    
                 </div>
                 <br>
-                <div id="new-publication" class="box-default">
-                    <h4 class="box-header" style="text-align:center;">Crear publicación</h4>
-                    <hr>
-                    {{form_start(form, {action: '', 'method':'POST'})}}
-                    {{form_end(form)}}
-                    <div class="clearfix"></div>
-                </div>
             </div>
-            <div id="timeline" class="col-md-7 box-default">
+        </div>
+        <div class="row">                        
+            <div id="timeline" class="col-md-8 box-default">
                 <h1 class="box-header">Timeline</h1>
                 <hr/>
                 <div class="box-content">
                     {% for publication in pagination %}
                         <div class="row publication-item">
-
                             <div class="col-md-2">
                                 <div class="avatar">
                                     {% if publication.user.image == null %}
@@ -96,7 +88,7 @@
                             </div>
                             <div class="col-md-9 publication-item-content">
                                 <p>
-                                    <a class="pub-name-link" href="{{ path('user_profile',{'nickname': publication.user.nick}) }}">
+                                    <a class="pub-name-link" href="{{ path('user_profile',{'nickname':user.nick}) }}">
                                         {{publication.user.name}} {{publication.user.surname}}
                                     </a>
                                     -
@@ -141,7 +133,7 @@
                     {{knp_pagination_render(pagination)}}
                 </div>
                 <div class="clearfix"></div>
-            </div>
-        </div>
+            </div>    
+        </div>    
     </div>
 {%endblock%}

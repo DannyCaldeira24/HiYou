@@ -211,33 +211,64 @@ class UserController extends Controller {
                 $query, $request->query->getInt('page', 1), 5
         );
 
-        return $this->render('AppBundle:User:users.html.twig',array(
-           'pagination' => $pagination 
+        return $this->render('AppBundle:User:users.html.twig', array(
+                    'pagination' => $pagination
         ));
     }
-    
+
     public function searchAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
-        
+
         $search = trim($request->query->get("search", null));
-        
-        if($search == null){
+
+        if ($search == null) {
             return $this->redirect($this->generateURL('home_publication'));
         }
-        
+
         $dql = "SELECT u FROM BackendBundle:User u "
                 . "WHERE u.name LIKE :search OR u.surname LIKE :search "
                 . "OR u.nick LIKE :search ORDER BY u.id ASC";
-        $query = $em->createQuery($dql)->setParameter('search',"$search%");
-        
+        $query = $em->createQuery($dql)->setParameter('search', "$search%");
+
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
                 $query, $request->query->getInt('page', 1), 5
         );
 
-        return $this->render('AppBundle:User:search.html.twig',array(
-           'pagination' => $pagination 
+        return $this->render('AppBundle:User:search.html.twig', array(
+                    'pagination' => $pagination
         ));
-    }    
+    }
+
+    public function profileAction(Request $request, $nickname = null) {
+        $em = $this->getDoctrine()->getManager();
+
+        if ($nickname != null) {
+            $user_repo = $em->getRepository("BackendBundle:User");
+            $user = $user_repo->findOneBy(array(
+                "nick" => $nickname
+            ));
+        } else {
+            $user = $this->getUser();
+        }
+
+        if (empty($user) || !is_object($user)) {
+            return $this->redirect($this->generateUrl('home_publications'));
+        }
+
+        $user_id = $user->getId();
+        $dql = "SELECT p FROM BackendBundle:Publication p WHERE p.user = $user_id ORDER BY p.id DESC";
+        $query = $em->createQuery($dql);
+
+        $paginator = $this->get('knp_paginator');
+        $publications = $paginator->paginate(
+                $query, $request->query->getInt('page', 1), 5
+        );
+        
+        return $this->render('AppBundle:User:profile.html.twig',array(
+           'user'=>$user,
+            'pagination'=>$publications
+        ));
+    }
 
 }

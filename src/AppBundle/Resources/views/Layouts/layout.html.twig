@@ -83,7 +83,7 @@
                                 {{app.user.name}} {{app.user.surname}}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ path('user_profile',{'nickname':app.user.nick}) }}">
                                     <span class="fas fa-user"></span>
                                     Mi perfil
                                 </a>

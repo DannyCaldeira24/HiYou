@@ -48,9 +48,9 @@ class LongTimeExtension extends \Twig_Extension {
 					}
 				} else {
 					if ($since_start->d == 1) {
-						$result = $since_start->d . ' dÃ­a';
+						$result = $since_start->d . ' día';
 					} else {
-						$result = $since_start->d . ' dÃ­as';
+						$result = $since_start->d . ' dias';
 					}
 				}
 			} else {
@@ -62,9 +62,9 @@ class LongTimeExtension extends \Twig_Extension {
 			}
 		} else {
 			if ($since_start->y == 1) {
-				$result = $since_start->y . ' aÃ±o';
+				$result = $since_start->y . ' año';
 			} else {
-				$result = $since_start->y . ' aÃ±os';
+				$result = $since_start->y . ' años';
 			}
 		}
 

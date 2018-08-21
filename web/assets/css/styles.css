@@ -139,6 +139,84 @@ nav{
 	color:#444 !important;
 }
 
+.like{
+	font-size: 25px;
+	
+}
+
+.like .btn-unlike,
+.like .btn-like{
+	position:absolute;
+}
+
+.like .btn-unlike:hover,
+.like .btn-like:hover{
+	color:red !important;
+	cursor:pointer;
+}
+
+.like .active{
+	color:red !important;
+}
+
+#user-card .following-data{
+	
+	text-align:center;
+	border-top:1px solid #ccc;
+	padding:5px;
+	margin-top:20px;
+}
+
+#user-card .following-data a:hover{
+	color:black;
+	text-decoration:none;
+}
+
+#user-card .following-data a{
+	color:#444;
+}
+
+#user-card .following-data .label-stat{
+	display:block;
+}
+
+#user-card .following-data .number-stat{
+	display:block;
+	font-size:16px;
+	font-weight:bold;
+}
+
+.profile-box{
+	padding:20px;
+	margin:0px auto;
+}
+
+.profile-box > .name-surname{
+	
+	text-align:center;
+	margin-top:50px;
+	margin-left:10px;
+}
+
+.profile-box > .avatar{
+	background:#eee;
+	border-radius:700px;
+	width:200px !important;
+	height:200px !important;
+	overflow:hidden;
+	margin:0px;
+}
+
+.profile-box > .avatar img{
+	height:100%;
+	text-align:center;
+}
+
+.bio{
+	font-size:14px;
+	opacity:0.8;
+}
+
 /*FOOTER*/
 footer{
 	margin-top:40px;

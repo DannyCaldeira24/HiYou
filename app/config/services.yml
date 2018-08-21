@@ -47,3 +47,19 @@ services:
         public: false
         tags:
             - { name: twig.extension }
+            
+    liked_time.twig_extension:
+        class: AppBundle\Twig\LikedExtension
+        public: false
+        arguments:
+            $doctrine: "@doctrine"
+        tags:
+            - { name: twig.extension }
+    
+    user_stats.twig_extension:
+        class: AppBundle\Twig\UserStatsExtension
+        public: false
+        arguments:
+            $doctrine: "@doctrine"
+        tags:
+            - { name: twig.extension } 

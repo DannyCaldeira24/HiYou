@@ -42,4 +42,8 @@ user_list:
 
 user_search:
     path: /search
-    defaults: {_controller: AppBundle:User:search }    
+    defaults: {_controller: AppBundle:User:search } 
+
+user_profile:
+    path: /user/{nickname}
+    defaults: {_controller: AppBundle:User:profile,nickname:null }  

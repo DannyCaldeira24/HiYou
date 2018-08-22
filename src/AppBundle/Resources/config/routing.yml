@@ -18,4 +18,8 @@ app_homepage:
     path: /
     defaults: {_controller: AppBundle:User:login}
 
+app_notification:
+    resource: "@AppBundle/Resources/config/routing/notification.yml"
+    prefix: /   
+
 

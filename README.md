@@ -26,4 +26,6 @@ Pasar las tablas de nuestra base de datos a codigo doctrine, para ello debemos m
     (Esto lo vamos a encontrar en la carpeta BackendBundle/Resources/config/doctrine)
 Luego hacemos composer update y por ultimo para crear nuestras entidades escribimos el siguiente comando:
     php bin/console doctrine:generate:entities BackendBundle
+Borrar cache:
+	
     

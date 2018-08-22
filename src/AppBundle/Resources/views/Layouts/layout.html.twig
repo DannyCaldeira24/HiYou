@@ -18,6 +18,7 @@
             <script src="{{asset('assets/js/jquery.min.js')}}"></script>
             <script src="{{asset('assets/bootstrap/js/bootstrap.min.js')}}"></script>
             <script src="{{asset('assets/js/jquery-ias.min.js')}}"></script>
+            <script src="{{asset('assets/js/custom/common.js')}}"></script>
         {% endblock %}
     </head>
     <body>
@@ -71,6 +72,20 @@
                         </form>
                     </ul>
                     <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{path("notifications_page")}}">
+                                <span class="fas fa-bell"></span>
+                                Notificaciones&nbsp;<span class="label-notifications badge badge-danger"></span>
+                                &nbsp;&nbsp;
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{path("register")}}">
+                                <span class="fas fa-comments"></span>
+                                Mensajes
+                                &nbsp;&nbsp;
+                            </a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <div class="avatar">

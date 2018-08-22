@@ -46,7 +46,7 @@ class FollowingController extends Controller {
             'user' => $user,
             'followed' => $followed_id
         ));
-        
+
         $em->remove($followed);
         $flush = $em->flush();
 
@@ -56,6 +56,69 @@ class FollowingController extends Controller {
             $status = "No se ha podido dejar de seguir a este usuario";
         }
         return new Response($status);
+    }
+
+    public function followingAction(Request $request, $nickname = null) {
+        $em = $this->getDoctrine()->getManager();
+
+        if ($nickname != null) {
+            $user_repo = $em->getRepository("BackendBundle:User");
+            $user = $user_repo->findOneBy(array(
+                "nick" => $nickname
+            ));
+        } else {
+            $user = $this->getUser();
+        }
+
+        if (empty($user) || !is_object($user)) {
+            return $this->redirect($this->generateUrl('home_publications'));
+        }
+
+        $user_id = $user->getId();
+        $dql = "SELECT f FROM BackendBundle:Following f WHERE f.user = $user_id ORDER BY f.id DESC";
+        $query = $em->createQuery($dql);
+
+        $paginator = $this->get('knp_paginator');
+        $following = $paginator->paginate(
+                $query, $request->query->getInt('page', 1), 5
+        );
+
+        return $this->render('AppBundle:Following:following.html.twig', array(
+                    'type' => 'following',
+                    'profile_user' => $user,
+                    'pagination' => $following
+        ));
+    }
+    public function followedAction(Request $request, $nickname = null) {
+        $em = $this->getDoctrine()->getManager();
+
+        if ($nickname != null) {
+            $user_repo = $em->getRepository("BackendBundle:User");
+            $user = $user_repo->findOneBy(array(
+                "nick" => $nickname
+            ));
+        } else {
+            $user = $this->getUser();
+        }
+
+        if (empty($user) || !is_object($user)) {
+            return $this->redirect($this->generateUrl('home_publications'));
+        }
+
+        $user_id = $user->getId();
+        $dql = "SELECT f FROM BackendBundle:Following f WHERE f.followed = $user_id ORDER BY f.id DESC";
+        $query = $em->createQuery($dql);
+
+        $paginator = $this->get('knp_paginator');
+        $followed = $paginator->paginate(
+                $query, $request->query->getInt('page', 1), 5
+        );
+
+        return $this->render('AppBundle:Following:following.html.twig', array(
+                    'type' => 'followed',
+                    'profile_user' => $user,
+                    'pagination' => $followed
+        ));
     }
 
 }

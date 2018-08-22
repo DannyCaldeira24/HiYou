@@ -6,16 +6,32 @@
 {% block content %}
     <div class="container">
         <div class="col-lg-7 box-default">
-            <h1 class="box-header">Resultado de busqueda</h1>
-            <br>
-            <div class="count">
-                <span class="label label-primary">
-                    <span class="badge badge-info">Usuarios encontrados: <span class="badge badge-light"> {{pagination.getTotalItemCount}}</span></span>
-                </span>
-            </div>
+            {%if type=='following'%}
+                <h1 class="box-header">Usuarios que sigue {{profile_user.nick}}</h1>
+                <br>
+                <div class="count">
+                    <span class="label label-primary">
+                        <span class="badge badge-info">Total de usuarios seguidos: <span class="badge badge-light"> {{pagination.getTotalItemCount}}</span></span>
+                    </span>
+                </div>
+            {%else%}
+                <h1 class="box-header">Usuarios que siguen a {{profile_user.nick}}</h1>
+                <br>
+                <div class="count">
+                    <span class="label label-primary">
+                        <span class="badge badge-info">Total de seguidores: <span class="badge badge-light"> {{pagination.getTotalItemCount}}</span></span>
+                    </span>
+                </div>
+            {%endif%}    
+
             <hr/>
             <div class="box-content box-users">
-                {% for user in pagination %}
+                {% for follow in pagination %}
+                    {%if type=='following'%}
+                        {%set user = follow.followed%}
+                    {%else%}
+                        {%set user = follow.user%}
+                    {%endif%} 
                     <div class="user-item">
                         <div class="row">
                             <div class="col-md-8">
@@ -53,17 +69,16 @@
                                     </button>
                                 {% endif %}
                             </div>
-                            <div class="clearfix"></div>    
+                            <div class="clearfix"></div>  
                         </div>
-                        <hr/>     
-                    </div>            
+                        <hr/>    
+                    </div>
                 {% endfor %}
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        {{knp_pagination_render(pagination) }}
+                    </ul>
+                </nav>   
             </div>
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    {{knp_pagination_render(pagination) }}
-                </ul>
-            </nav>   
         </div>
-    </div>
-{%endblock%}
+    {%endblock%}

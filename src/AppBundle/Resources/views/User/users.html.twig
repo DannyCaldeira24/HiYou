@@ -6,31 +6,33 @@
 {% block content %}
     <div class="container">
         <div class="col-lg-7 box-default">
-            <h1>Usuarios registrados</h1>
+            <h1 class="box-header">Usuarios registrados</h1>
+            <br>
             <div class="count">
                 <span class="label label-primary">
-                    Total de posibles busquedas: {{pagination.getTotalItemCount }}
+                    <span class="badge badge-info">Total de posibles busquedas: <span class="badge badge-light"> {{pagination.getTotalItemCount}}</span></span>
                 </span>
             </div>
             <hr/>
             <div class="box-content box-users">
                 {% for user in pagination %}
-                    <div class="col-md-12 user-item">
-                        <div class="avatar">
-                            {% if user.image == null %}
-                                <img src="{{asset('assets/images/default.png')}}" alt="">	
-                            {%else%}
-                                <img src="{{asset('uploads/users/'~user.image)}}" alt="">
-                            {% endif %}
-                        </div>
-                        <div class="user-item-content">
-                            <p><a href="{{ path('user_profile',{'nickname':user.nick}) }}">{{user.name}} {{user.surname}}</a> - {{user.nick}}</p>
-                            <p>{{user.bio}}</p>
-                        </div>
-                        {% if app.user.id != user.id %}
-                            <div class="row">
-                                <div class="col-md-8"></div>
-                                <div class="col-md-4 buttons-following">
+                    <div class="user-item">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="avatar">
+                                    {% if user.image == null %}
+                                        <img src="{{asset('assets/images/default.png')}}" alt="">	
+                                    {%else%}
+                                        <img src="{{asset('uploads/users/'~user.image)}}" alt="">
+                                    {% endif %}
+                                </div>
+                                <div class="user-item-content">
+                                    <p><a href="{{ path('user_profile',{'nickname':user.nick}) }}">{{user.name}} {{user.surname}}</a> - {{user.nick}}</p>
+                                    <p>{{user.bio}}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 buttons-following">    
+                                {% if app.user.id != user.id %}
                                     <button class="btn btn-info btn-follow 
                                             {% if app.user|following(user) == true %}
                                                 hidden
@@ -49,15 +51,14 @@
                                         <span class="fas fa-times" aria-hidden="true"></span>
                                         Dejar de seguir
                                     </button>
-                                </div>
-                            </div>        
-                        {% endif %}
-                        <div class="clearfix"></div>
-                        <hr/> 
-                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <hr/>     
+                    </div>            
                 {% endfor %}
             </div>
-
             <nav aria-label="Page navigation">
                 <ul class="pagination">
                     {{knp_pagination_render(pagination) }}

@@ -26,7 +26,7 @@
                     {% set user_stats = user|user_stats %}        
                     <div class="row">
                         <div class="col-md-3 following-data">
-                            <a href="#">
+                            <a href="{{ path('following_users',{'nickname':app.user.nick}) }}">
                                 <span class="label-stat">
                                     Siguiendo
                                 </span>
@@ -36,7 +36,7 @@
                             </a>
                         </div>
                         <div class="col-md-3 following-data">
-                            <a href="#">
+                            <a href="{{ path('followed_users',{'nickname':app.user.nick}) }}">
                                 <span class="label-stat">
                                     Seguidores
                                 </span>
@@ -46,7 +46,7 @@
                             </a>
                         </div>
                         <div class="col-md-3 following-data">
-                            <a href="#">
+                            <a href="{{ path('user_profile',{'nickname':app.user.nick}) }}">
                                 <span class="label-stat">
                                     Publicaciones
                                 </span>
@@ -56,7 +56,7 @@
                             </a>
                         </div>
                         <div class="col-md-3 following-data">
-                            <a href="#">
+                            <a href="{{ path('user_likes',{'nickname':app.user.nick}) }}">
                                 <span class="label-stat">
                                     Me gustas
                                 </span>
@@ -70,13 +70,13 @@
                 <br>
             </div>
         </div>
-        <div class="row">                        
-            <div id="timeline" class="col-md-8 box-default">
-                <h1 class="box-header">Timeline</h1>
-                <hr/>
-                <div class="box-content">
-                    {% for publication in pagination %}
-                        <div class="row publication-item">
+        <div id="timeline" class="col-md-7 box-default">
+            <h1 class="box-header">Timeline</h1>
+            <hr/>
+            <div class="box-content">
+                {% for publication in pagination %}
+                    <div class="publication-item">
+                        <div class="row">
                             <div class="col-md-2">
                                 <div class="avatar">
                                     {% if publication.user.image == null %}
@@ -86,54 +86,56 @@
                                     {% endif %}
                                 </div>	                            
                             </div>
-                            <div class="col-md-9 publication-item-content">
-                                <p>
-                                    <a class="pub-name-link" href="{{ path('user_profile',{'nickname':user.nick}) }}">
-                                        {{publication.user.name}} {{publication.user.surname}}
-                                    </a>
-                                    -
-                                    <span class="pub-nick">{{publication.user.nick}}</span>
-                                    -
-                                    <span class="pub-date">
-                                        {{publication.createdAt|long_time}}
-                                    </span>
-                                </p>
-                                <div class="box-default"><p>{{publication.text}}</p></div>
-
-                                {%if (publication.user.id is defined) and (publication.user.id == app.user.id)%}
-                                    <span data-id="{{publication.id}}" class="btn-delete-pub fas fa-trash-alt fas fa-images" aria-hidden="true"></span> 
-                                {%endif%}
-                                {% if(publication.document is defined) and (publication.document != null) %}
-
-                                    <a href="{{asset('uploads/publications/documents/'~publication.document)}}" class="btn-doc fas fa-download" aria-hidden="true" target="_blank">
-
-                                    </a>
-                                {%endif%}
-                                {% if(publication.image is defined) and (publication.image != null) %}
-
-                                    <span class="btn-img fas fa-images" aria-hidden="true"></span>
-
-                                    <div class="pub-image">
-                                        <img src="{{asset('uploads/publications/images/'~publication.image)}}" alt="">
+                            <div class="col-md-10 publication-item-content">
+                                <div class="row">
+                                    <div style="padding:0;margin-top:15px;" class="col-md-9">
+                                        <a class="pub-name-link" href="{{ path('user_profile',{'nickname': publication.user.nick}) }}">
+                                            {{publication.user.name}} {{publication.user.surname}}
+                                        </a>
+                                        &nbsp;
+                                        <span class="pub-nick">@{{publication.user.nick}}</span>
                                     </div>
-                                {%endif%}
-                                <br>
+                                    <div class="col-md-3">
+                                        <span class="pub-date">
+                                            {{publication.createdAt|long_time}}
+                                        </span>
+                                    </div>    
+                                </div>
+                                <br>        
+                                <div class="row">        
+                                    <div class="box-default col-md-11">
+                                        <p>{{publication.text}}</p>
+                                    </div>
+                                    <div class="col-md-1 like">
+                                        <span data-id="{{publication.id}}" class="{%if app.user|liked(publication) == true%}hidden{%endif%} far fa-heart btn-like" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Me gusta"></span>
+                                        <span data-id="{{publication.id}}" class="{%if app.user|liked(publication) == false%}hidden{%endif%} far fa-heart btn-unlike active" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="No me gusta"></span>
+                                    </div>
+                                </div>
+                                <div class="row publication-options">            
+                                    {%if (publication.user.id is defined) and (publication.user.id == app.user.id)%}
+                                        <span data-id="{{publication.id}}" class="btn-delete-pub fas fa-trash-alt fas fa-images" aria-hidden="true"></span> 
+                                    {%endif%}
+                                    {% if(publication.document is defined) and (publication.document != null) %}
+                                        <a href="{{asset('uploads/publications/documents/'~publication.document)}}" class="btn-doc fas fa-download" aria-hidden="true" target="_blank"></a>
+                                    {%endif%}
+                                    {% if(publication.image is defined) and (publication.image != null) %}
+                                        <span class="btn-img fas fa-images" aria-hidden="true"></span>
+                                        <div class="pub-image col-md-11">
+                                            <img src="{{asset('uploads/publications/images/'~publication.image)}}" alt="">
+                                        </div>
+                                    {%endif%}
 
+                                </div>    
                             </div>
-                            <div class="col-md-1 like">
-                                <span data-id="{{publication.id}}" class="{%if app.user|liked(publication) == true%}hidden{%endif%} far fa-heart btn-like" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Me gusta"></span>
-                                <span data-id="{{publication.id}}" class="{%if app.user|liked(publication) == false%}hidden{%endif%} far fa-heart btn-unlike active" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="No me gusta"></span>
-                            </div>    
-                            <div class="col-md-12"><hr></div>
                         </div>
-                    {% endfor %}
-                </div> 
-
-                <div class="box-content">
-                    {{knp_pagination_render(pagination)}}
-                </div>
-                <div class="clearfix"></div>
-            </div>    
-        </div>    
+                        <hr>    
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="box-content">
+                {{knp_pagination_render(pagination)}}
+            </div>
+            <div class="clearfix"></div>
+        </div>   
     </div>
 {%endblock%}

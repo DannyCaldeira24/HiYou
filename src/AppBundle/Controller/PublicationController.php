@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
-
 use BackendBundle\Entity\Publication;
 use AppBundle\Form\PublicationType;
 
@@ -117,10 +116,24 @@ class PublicationController extends Controller {
 
     public function removePublicationAction(Request $request, $id = null) {
         $em = $this->getDoctrine()->getManager();
+        $notification_repo = $em->getRepository('BackendBundle:Notification');
+        $notification = $notification_repo->findBy(array('extra' => $id));
+        foreach ($notification as $not) {
+            $em->remove($not);
+            $flush = $em->flush();
+        }
+        $em = $this->getDoctrine()->getManager();
+        $like_repo = $em->getRepository('BackendBundle:Like');
+        $like = $like_repo->findBy(array('publication' => $id));
+        foreach ($like as $likes) {
+            $em->remove($likes);
+            $flush = $em->flush();
+        }
+        $em = $this->getDoctrine()->getManager();
         $publication_repo = $em->getRepository('BackendBundle:Publication');
         $publication = $publication_repo->find($id);
-        $user=$this->getUser();
-        if($user->getId()==$publication->getUser()->getId()) {
+        $user = $this->getUser();
+        if ($user->getId() == $publication->getUser()->getId()) {
             $em->remove($publication);
             $flush = $em->flush();
 
@@ -129,7 +142,7 @@ class PublicationController extends Controller {
             } else {
                 $status = "La publicación no se ha borrado";
             }
-        }else{
+        } else {
             $status = "La publicación no se ha borrado";
         }
         return new Response($status);

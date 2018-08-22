@@ -1,0 +1,70 @@
+{% extends "AppBundle:Layouts:layout.html.twig"%}
+{% block javascripts %}
+    {{parent()}}
+    <script type="text/javascript" src="{{asset('assets/js/custom/noti_publi.js')}}"></script>
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7 box-default">
+                <div class="box-content">
+                    <div class="publication-item">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="avatar">
+                                    {% if app.user.image == null %}
+                                        <img src="{{asset('assets/images/default.png')}}" alt="">	
+                                    {%else%}
+                                        <img src="{{asset('uploads/users/'~app.user.image)}}" alt="">
+                                    {% endif %}
+                                </div>	                            
+                            </div>
+                            <div class="col-md-10 publication-item-content">
+                                <div class="row">
+                                    <div style="padding:0;margin-top:15px;" class="col-md-9">
+                                        <a class="pub-name-link" href="{{ path('user_profile',{'nickname': app.user.nick}) }}">
+                                            {{app.user.name}} {{app.user.surname}}
+                                        </a>
+                                        &nbsp;
+                                        <span class="pub-nick">@{{app.user.nick}}</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <span class="pub-date">
+                                            {{publication.createdAt|long_time}}
+                                        </span>
+                                    </div>    
+                                </div>
+                                <br>        
+                                <div class="row">        
+                                    <div class="box-default col-md-11">
+                                        <p>{{publication.text}}</p>
+                                    </div>
+                                    <div class="col-md-1 like">
+                                        <span data-id="{{publication.id}}" class="{%if app.user|liked(publication) == true%}hidden{%endif%} far fa-heart btn-like" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Me gusta"></span>
+                                        <span data-id="{{publication.id}}" class="{%if app.user|liked(publication) == false%}hidden{%endif%} far fa-heart btn-unlike active" aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="No me gusta"></span>
+                                    </div>
+                                </div>
+                                <div class="row publication-options">            
+                                    {%if (publication.user.id is defined) and (publication.user.id == app.user.id)%}
+                                        <span data-id="{{publication.id}}" class="btn-delete-pub fas fa-trash-alt fas fa-images" aria-hidden="true"></span> 
+                                    {%endif%}
+                                    {% if(publication.document is defined) and (publication.document != null) %}
+                                        <a href="{{asset('uploads/publications/documents/'~publication.document)}}" class="btn-doc fas fa-download" aria-hidden="true" target="_blank"></a>
+                                    {%endif%}
+                                    {% if(publication.image is defined) and (publication.image != null) %}
+                                        <span class="btn-img fas fa-images" aria-hidden="true"></span>
+                                        <div class="pub-image col-md-11">
+                                            <img src="{{asset('uploads/publications/images/'~publication.image)}}" alt="">
+                                        </div>
+                                    {%endif%}
+
+                                </div>    
+                            </div>
+                        </div>
+                           
+                    </div>
+                </div>
+            </div>   
+        </div>
+    </div>            
+{%endblock%}

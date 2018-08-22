@@ -5,4 +5,8 @@ notifications_page:
 notifications_ajax:
     path: /notifications/get
     defaults: {_controller: AppBundle:Notification:countNotifications }
+
+notifications_publications:
+    path: /notifications/{id}
+    defaults: {_controller: AppBundle:Notification:publication,id:null }    
     

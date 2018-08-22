@@ -8,7 +8,7 @@ $(document).ready(function(){
    notifications();
    setInterval(function(){
        notifications();
-   },3000);
+   },10000);
    
 });
 

@@ -39,5 +39,25 @@ class NotificationController extends Controller {
         
         return new Response(count($notifications));
     }
+    
+    public function publicationAction(Request $request, $id = null){
+        $em = $this->getDoctrine()->getManager();
+
+        if ($id != null) {
+            $publication_repo = $em->getRepository("BackendBundle:Publication");
+            $publication = $publication_repo->findOneBy(array(
+                "id" => $id
+            ));
+        }
+
+        if (empty($publication) || !is_object($publication)) {
+            return $this->redirect($this->generateUrl('home_publications'));
+        }
+       
+        return $this->render('AppBundle:Notifications:user_publication.html.twig',array(
+           'publication'=>$publication
+        ));
+    
+    }
 
 }

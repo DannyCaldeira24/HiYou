@@ -19,11 +19,12 @@
                                 </div>  
                                 <div class="col-md-11">
                                     {%set notu = notification.typeId|get_user%}
+                                    {%set notp = notification.extra|get_extra%}
                                     {%if notification.type == "follow"%}
                                         <p><a class="pub-name-link" href="{{path("user_profile",{'nickname':notu.nick})}}">{{notu.name}} {{notu.surname}}</a> te empezo a seguir</p>
                                     {%endif%}
                                     {%if notification.type == "like"%}
-                                        <p><a class="pub-name-link" href="{{path("user_profile",{'nickname':notu.nick})}}">{{notu.name}} {{notu.surname}}</a> le dio me gusta a tu publicación</p>
+                                        <p><a class="pub-name-link" href="{{path("user_profile",{'nickname':notu.nick})}}">{{notu.name}} {{notu.surname}}</a> le dio me gusta a <a class="pub-name-link" href="{{path("notifications_publications",{'id':notp.id})}}">tu publicación</a></p>
                                     {%endif%} 
                                 </div>
                             </div>

@@ -121,6 +121,10 @@ nav{
 	opacity:0.7;
 }
 
+div > .btn-success{
+	text-align:center;
+}
+
 .pub-date{
 	font-size:12px;
 }
@@ -227,6 +231,12 @@ nav{
 }
 .publication-options{
 	margin-top:10px;
+	margin-bottom:10px;
+}
+/*PRIVATE_MESSAGES*/
+.box-private-message textarea,
+.box-private-message select,
+.box-private-message input{
 	margin-bottom:10px;
 }
 /*FOOTER*/

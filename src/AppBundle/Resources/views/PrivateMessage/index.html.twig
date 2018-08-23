@@ -1,0 +1,89 @@
+{% extends "AppBundle:Layouts:layout.html.twig"%}
+{% block javascripts %}
+    {{parent()}}
+    <script type="text/javascript" src="{{asset('assets/js/custom/private_messages.js')}}"></script>
+{%endblock%}    
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 box-default">
+                <h1 class="box-header">
+                    Mensajeria privada
+                    <hr>
+                </h1>
+                <div class="row">
+                    <div class="box-private-message col-md-6">
+                        <h4 class="box-header">Enviar mensaje privado</h4>
+                        <hr>
+                        {{form_start(form, {action: '', 'method':'POST'})}}
+                        {{form_end(form)}}
+                        <br>
+                        <a href="{{path('private_message_sended')}}" class="btn btn-warning">Ver mensajes enviados</a>
+                    </div>
+                    <div id="box-messages" class="col-md-6">
+                        <h4 class="box-header">Mensajes recibidos</h4>
+                        <hr>
+                        <div class="box-content box-messages">
+                            {% for message in pagination %}
+                                <div class="publication-item">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="avatar">
+                                                {% if message.emitter.image == null %}
+                                                    <img src="{{asset('assets/images/default.png')}}" alt="">	
+                                                {%else%}
+                                                    <img src="{{asset('uploads/users/'~message.emitter.image)}}" alt="">
+                                                {% endif %}
+                                            </div>	                            
+                                        </div>
+                                        <div class="col-md-10 publication-item-content">
+                                            <div class="row">
+                                                <div style="margin-top:15px;" class="col-md-8">
+                                                    <a class="pub-name-link" href="{{ path('user_profile',{'nickname': message.emitter.nick}) }}">
+                                                        {{message.emitter.name}} {{message.emitter.surname}}
+                                                    </a>
+
+                                                    <span class="pub-nick">@{{message.emitter.nick}}</span>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <span class="pub-date">
+                                                        {{message.createdAt|long_time}}
+                                                    </span>
+                                                </div>    
+                                            </div>
+                                            <br>        
+                                            <div class="row">        
+                                                <div class="box-default col-md-11">
+                                                    <p>{{message.message}}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row publication-options">
+                                                <div class="col-md-12">
+                                                    {% if(message.file is defined) and (message.file != null) %}
+                                                        <a href="{{asset('uploads/message/documents/'~message.file)}}" class="btn-doc fas fa-download" aria-hidden="true" target="_blank"></a>
+                                                    {%endif%}
+                                                    {% if(message.image is defined) and (message.image != null) %}
+                                                        <span class="btn-img fas fa-images" aria-hidden="true"></span>
+                                                        <div class="pub-image col-md-11">
+                                                            <img src="{{asset('uploads/message/images/'~message.image)}}" alt="">
+                                                        </div>
+                                                    {%endif%}
+                                                </div>
+                                            </div>    
+                                        </div>
+                                    </div>
+                                    <hr>    
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="box-content">
+                            {{knp_pagination_render(pagination)}}
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>    
+            </div>
+        </div>   
+    </div>                     
+{% endblock %}    

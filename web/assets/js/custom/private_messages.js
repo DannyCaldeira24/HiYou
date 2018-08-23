@@ -1,15 +1,15 @@
 $(document).ready(function () {
 
     var ias = jQuery.ias({
-        container: '#timeline .box-content',
+        container: '#box-messages .box-content',
         item: '.publication-item',
-        pagination: '#timeline .pagination',
-        next: '#timeline .pagination .next_link',
+        pagination: '#box-messages .pagination',
+        next: '#box-messages .pagination .next_link',
         triggerPageThreshold: 5
     });
 
     ias.extension(new IASTriggerExtension({
-        text: 'Ver más publicaciones',
+        text: 'Ver más mensajes',
         offset: 3
     }));
 
@@ -18,7 +18,7 @@ $(document).ready(function () {
     }));
 
     ias.extension(new IASNoneLeftExtension({
-        text: 'No hay más publicaciones'
+        text: 'No hay más mensajes'
     }));
 
     ias.on('ready', function (event) {

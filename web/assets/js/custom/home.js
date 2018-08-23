@@ -38,7 +38,7 @@ function buttons() {
     });
 
     $(".btn-delete-pub").unbind('click').click(function () {
-        $(this).parent().parent().parent().addClass("hidden");
+        $(this).parent().parent().parent().parent().addClass("hidden");
         $.ajax({
             url: URL + '/publication/remove/' + $(this).attr("data-id"),
             type: 'GET',

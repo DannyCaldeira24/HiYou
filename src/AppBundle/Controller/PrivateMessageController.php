@@ -80,6 +80,7 @@ class PrivateMessageController extends Controller {
         }
         
         $private_messages = $this->getPrivateMessages($request);
+        $this->setReaded($em, $user);
         return $this->render("AppBundle:PrivateMessage:index.html.twig", array(
                     "form" => $form->createView(),
                     "pagination" => $private_messages
@@ -115,6 +116,37 @@ class PrivateMessageController extends Controller {
         );
 
         return $pagination;
+    }
+    
+    public function notReadedAction(){
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        
+        $private_message_repo = $em->getRepository('BackendBundle:PrivateMessage');
+        $count_not_readed_msg = count($private_message_repo->findBy(array(
+            'receiver' => $user,
+            'readed' => 0
+        )));
+        
+        return new Response($count_not_readed_msg);
+    }
+    
+    private function setReaded($em, $user){
+       $private_message_repo = $em->getRepository('BackendBundle:PrivateMessage');
+       $messages = $private_message_repo->findBy(array(
+          'receiver'=>$user,
+           'readed'=>0
+       ));
+       foreach($messages as $msg){
+           $msg->setReaded(1);
+           $em->persist($msg);
+       }
+       $flush=$em->flush();
+       if($flush==null){
+           $result=true;
+       }else{
+           $result=false;
+       }
     }
 
 }

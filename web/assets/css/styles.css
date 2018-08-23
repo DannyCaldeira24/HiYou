@@ -219,7 +219,9 @@ div > .btn-success{
 	height:100%;
 	text-align:center;
 }
-
+#login_en:hover{
+	text-decoration:none;
+}
 .bio{
 	font-size:14px;
 	opacity:0.8;

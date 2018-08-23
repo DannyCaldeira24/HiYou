@@ -12,11 +12,17 @@ use AppBundle\Form\UserType;
 
 class UserController extends Controller {
 
+    private $session;
+
+    public function __construct() {
+        $this->session = new Session();
+    }
+
     public function loginAction(Request $request) {
         if (is_object($this->getUser())) {
             return $this->redirect('home');
         }
-
+        
         $authenticationUtils = $this->get('security.authentication_utils');
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
@@ -264,10 +270,10 @@ class UserController extends Controller {
         $publications = $paginator->paginate(
                 $query, $request->query->getInt('page', 1), 5
         );
-        
-        return $this->render('AppBundle:User:profile.html.twig',array(
-           'user'=>$user,
-            'pagination'=>$publications
+
+        return $this->render('AppBundle:User:profile.html.twig', array(
+                    'user' => $user,
+                    'pagination' => $publications
         ));
     }
 

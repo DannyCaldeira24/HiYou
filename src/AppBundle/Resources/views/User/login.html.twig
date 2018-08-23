@@ -1,20 +1,37 @@
 {% extends "AppBundle:Layouts:layout.html.twig"%}
 {% block content %}
-    <div class="col-lg-5 box-form">
+    <div class="col-md-4 box-form">
         <h2>Iniciar sesión</h2>
         <hr/>
         <!--{% if is_granted('ROLE_USER') %}
-            {{dump(app.user)}}
-        {% endif %}  -->  
-        <form action="{{path('login_check')}}" method="POST">
-            <label>Email</label>
-            <input type="email" id="username" name="_username" value="{{last_username}}" class="form-control"/>
-            
-            <label>Contraseña</label>
-            <input type="password" id="password" name="_password" class="form-control"/>
-            <br/>
-            <input type="submit" value="Entrar" class="btn btn-success"/>
-            <input type="hidden" name="_target_path" value="/home" />
-        </form>
-    </div>
-{%endblock%}
+        {{dump(app.user)}}
+        {% endif %}  -->
+            {% if error != null %}
+                <div class="alert alert-danger">
+                    <strong>Alerta!</strong>&nbsp;&nbsp;El email y contraseña que nos has suministrado no coinciden con los registros en nuestra base de datos.
+                </div>
+
+            {% endif %}    
+            <form action="{{path('login_check')}}" method="POST">
+                <label>Email</label>
+                <input type="email" id="username" name="_username" value="{{last_username}}" class="form-control"/>
+
+                <label>Contraseña</label>
+                <input type="password" id="password" name="_password" class="form-control"/>
+                
+                <div class="row">
+                    <div class="col-md-9">
+                        <a id="login_en" href="{{path("register")}}">
+                            <span class="fas fa-user-plus"></span>
+                            Si no tienes una cuenta, creala ahora
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <br>
+                        <input type="submit" value="Entrar" class="btn btn-success"/>
+                    </div>
+                </div>
+                <input type="hidden" name="_target_path" value="/home" />
+            </form>
+        </div>
+        {%endblock%}

@@ -8,25 +8,55 @@
         <div class="row">
             <div id="user-card" class="col-md-12">
                 <div class="box-default">
-                    <div class="col-md-7 profile-box">
-                        <div class="avatar">
-                            {% if user.image == null %}
-                                <img src="{{asset('assets/images/default.png')}}" alt="">	
-                            {%else%}
-                                <img src="{{asset('uploads/users/'~user.image)}}" alt="">
-                            {% endif %}
-                        </div>    
-                        <div class="name-surname">
-                            <p><a href="{{ path('user_profile',{'nickname':user.nick}) }}">{{user.name}} {{user.surname}}</a><span class="nickname">&nbsp;@{{user.nick}}</span></p>
-                            <p class="bio">{{user.bio}}</p>
-                            <div class="clearfix"></div>                    
+                    <div class="row">
+                        <div class="col-md-5 profile-box">
+                            <div style="float:right;" class="avatar">
+                                {% if user.image == null %}
+                                    <img src="{{asset('assets/images/default.png')}}" alt="">	
+                                {%else%}
+                                    <img src="{{asset('uploads/users/'~user.image)}}" alt="">
+                                {% endif %}
+                            </div>
                         </div>
-                        <div class="clearfix"></div>
+                        <div class="col-md-7 profile-box">    
+                            <div class="name-surname">
+                                <p><a class="pub-name-link" href="{{ path('user_profile',{'nickname':user.nick}) }}">{{user.name}} {{user.surname}}</a><span class="nickname">&nbsp;@{{user.nick}}</span></p>
+                                <p class="bio">{{user.bio}}</p>
+                                {% if app.user.id != user.id %}
+                                    {% if user|following(app.user) == true %}
+                                        <button class="btn btn-sm btn-disable disable" disabled>
+                                            <span class="fas fa-check" aria-hidden="true"></span>
+                                            Te sigue
+                                        </button>
+                                    {% endif %}
+                                    <button class="btn btn-info btn-follow 
+                                            {% if app.user|following(user) == true %}
+                                                hidden
+                                            {% endif %}
+                                            "
+                                            data-followed="{{user.id}}">
+                                        <span class="fas fa-check" aria-hidden="true"></span>
+                                        Seguir
+                                    </button>
+                                    <button class="btn btn-info btn-unfollow 
+                                            {% if app.user|following(user) == false %}
+                                                hidden
+                                            {% endif %}
+                                            "
+                                            data-followed="{{user.id}}">
+                                        <span class="fas fa-times" aria-hidden="true"></span>
+                                        Dejar de seguir
+                                    </button>
+                                {% endif %}
+                                <div class="clearfix"></div>                    
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
                     </div>
                     {% set user_stats = user|user_stats %}        
                     <div class="row">
                         <div class="col-md-3 following-data">
-                            <a href="{{ path('following_users',{'nickname':app.user.nick}) }}">
+                            <a href="{{ path('following_users',{'nickname':user.nick}) }}">
                                 <span class="label-stat">
                                     Siguiendo
                                 </span>
@@ -36,7 +66,7 @@
                             </a>
                         </div>
                         <div class="col-md-3 following-data">
-                            <a href="{{ path('followed_users',{'nickname':app.user.nick}) }}">
+                            <a href="{{ path('followed_users',{'nickname':user.nick}) }}">
                                 <span class="label-stat">
                                     Seguidores
                                 </span>
@@ -46,7 +76,7 @@
                             </a>
                         </div>
                         <div class="col-md-3 following-data">
-                            <a href="{{ path('user_profile',{'nickname':app.user.nick}) }}">
+                            <a href="{{ path('user_profile',{'nickname':user.nick}) }}">
                                 <span class="label-stat">
                                     Publicaciones
                                 </span>
@@ -56,7 +86,7 @@
                             </a>
                         </div>
                         <div class="col-md-3 following-data">
-                            <a href="{{ path('user_likes',{'nickname':app.user.nick}) }}">
+                            <a href="{{ path('user_likes',{'nickname':user.nick}) }}">
                                 <span class="label-stat">
                                     Me gustas
                                 </span>
